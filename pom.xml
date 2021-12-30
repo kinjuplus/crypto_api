@@ -60,12 +60,6 @@
              <artifactId>httpclient</artifactId>
          </dependency>
          
-         <!--  <dependency>
-             <groupId>org.brotli</groupId>
-             <artifactId>dec</artifactId>
-             <version>0.1.2</version>
-         </dependency>-->
-         
          <dependency>
              <groupId>commons-io</groupId>
              <artifactId>commons-io</artifactId>

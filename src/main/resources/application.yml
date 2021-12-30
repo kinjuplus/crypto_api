@@ -1,0 +1,16 @@
+spring:
+  thymeleaf:
+    encoding: UTF-8
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+
+server:
+  port: 8082
+ 
+
+crpyto:
+  api:
+    url:
+      getTrade: https://api.crypto.com/v2/public/get-trades? 
+      getCandleStick: https://api.crypto.com/v2/public/get-candlestick?

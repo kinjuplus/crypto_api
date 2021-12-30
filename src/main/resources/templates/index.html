@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<link rel="stylesheet" th:href="@{/webjars/font-awesome/5.12.0/css/all.min.css}">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+<link th:href="@{/css/jquery.mloading.css}" rel="stylesheet">
+<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script th:src="@{/js/sb-admin-2.min.js}"></script>
+<script th:src="@{/js/axios.min.js}"></script>
+<script th:src="@{/js/jquery.mloading.js}"></script>
+<script th:src="@{/js/sweetalert.min.js}"></script>
+</head>
+<body id="page-top">
+    <div id="wrapper">
+		<!-- Content Wrapper -->
+		<!--  <th:block th:include="common/page :: sidebar"></th:block> -->
+		<div id="content-wrapper" class="d-flex flex-column">
+			<!-- Main Content -->
+			<div id="content">
+				<!-- Begin Page Content -->
+				
+				<div class="container-fluid">
+				     <!-- Page Heading -->
+					
+					<div class="card mb-3">
+					     <div class="card-header">
+						    <i class="fas fa-clipboard-list"></i><span>Which Instrument do you want to validate consistency between getTrade / getCandleStick ?</span>
+						</div>
+					     
+					     
+					     <form>  
+						     <div class="card-body">
+						          <div class="form-group">
+									    <label for="instrumentSelect">Instrument select</label>
+									    <select class="form-control" id="instrumentSelect">
+									       <option>BTC_USDT</option>
+									       <option>ETH_CRO</option>
+									    </select>
+							     </div>     
+						          
+						          
+						         
+						     </div>
+						     <div class="card-footer">
+						          <button type="button" class="btn btn-primary btn-sm" onclick="doValidate()">
+								           Validate
+								   </button>
+								   
+						     </div>
+					    </form> 
+					</div>
+			    </div>
+			</div>
+	    </div>
+    </div>	    		    		     
+   
+</body>
+<script  th:inline="javascript">
+    /*<![CDATA[*/
+    
+    function doValidate(){
+    	let instrument = $('#instrumentSelect').val();
+    	 $("body").mLoading({
+  			 icon : "/js/Wedges-3s-120px.gif",
+  		  });
+    	 axios.post(`/validateInstrument?instrument=${instrument}`).then(response=>{
+    		 $("body").mLoading("hide");
+    		 if(response.data.errorCode == "00"){
+    			 swal("Good job!", "Validate Success", "success");
+    		 }else if(response.data.errorCode == "01"){
+                 let msg = response.data.msgList.join('\n');
+    			 swal({ title: 'Validate Failed', text: msg });
+    		 }else{
+    			 swal("Ooops", "Something is wrong!", "error"); 
+    		 }
+    	 }).catch(error=>{console.log(error);});  
+    }	   
+    
+    /*]]>*/
+</script> 	
+</html>
